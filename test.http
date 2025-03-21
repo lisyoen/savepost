@@ -1,0 +1,7 @@
+POST http://localhost:4040/savepost
+Content-Type: application/json
+
+{
+  "key": "value",
+  "message": "Hello, MariaDB!"
+}
