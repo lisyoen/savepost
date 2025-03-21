@@ -1,13 +1,9 @@
-import { createPool } from 'mysql2/promise';
 import { promises as fs } from 'fs';
 import * as path from 'path';
 
-const pool = createPool({
-  host: 'localhost', // MariaDB 서버 주소
-  user: 'root',      // MariaDB 사용자 이름
-  password: 'your_password', // MariaDB 비밀번호
-  database: 'savepost_db',   // 사용할 데이터베이스 이름
-});
+// CommonJS 환경에서도 __filename과 __dirname을 정의
+const __filename = path.resolve();
+const __dirname = path.dirname(__filename);
 
 const saveFilePath = path.join(__dirname, '../../data/posts.json');
 
@@ -19,7 +15,7 @@ export async function savePost(data: Record<string, any>): Promise<any> {
       const fileContent = await fs.readFile(saveFilePath, 'utf-8');
       existingData = JSON.parse(fileContent);
     } catch (err) {
-      if (err.code !== 'ENOENT') {
+      if ((err as NodeJS.ErrnoException).code !== 'ENOENT') {
         throw err; // 파일이 없을 때를 제외한 오류는 다시 던짐
       }
     }
