@@ -1,9 +1,13 @@
 import { promises as fs } from 'fs';
 import * as path from 'path';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-// CommonJS 환경에서도 __filename과 __dirname을 정의
-const __filename = path.resolve();
-const __dirname = path.dirname(__filename);
+const __filename: string = fileURLToPath(import.meta.url);
+const __dirname = __dirname || dirname(__filename);
+
+console.log(__filename); // 현재 파일의 절대 경로
+console.log(__dirname);  // 현재 파일이 위치한 디렉토리
 
 const saveFilePath = path.join(__dirname, '../../data/posts.json');
 
