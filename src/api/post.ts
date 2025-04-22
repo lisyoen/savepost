@@ -1,11 +1,13 @@
 import fs from 'fs';
 import path from 'path';
-import express from 'express';
+import { fileURLToPath } from 'url'; // 추가
+import { promises as fsPromises } from 'fs';
 
-const app = express();
-app.use(express.json());
+// __dirname 대체 코드
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const dataDir = path.resolve('C:/git/savepost/data');
+const dataDir = path.resolve(__dirname, '../../data'); // 상대 경로로 변경
 const dataFile = path.join(dataDir, 'posts.json');
 
 // Ensure the data directory and file exist
@@ -18,11 +20,9 @@ if (!fs.existsSync(dataFile)) {
     fs.writeFileSync(dataFile, JSON.stringify([]), 'utf-8');
     console.log('Initialized posts.json with empty array.');
   } catch (error) {
-    console.error('Error initializing posts.json:', error);
+    console.error('Error initializing posts.json:', (error as Error).message);
   }
 }
-
-import { promises as fsPromises } from 'fs';
 
 const saveFilePath = path.join(dataDir, 'posts.json');
 
@@ -34,6 +34,7 @@ export async function savePost(data: Record<string, any>): Promise<any> {
       existingData = JSON.parse(fileContent);
     } catch (err) {
       if ((err as NodeJS.ErrnoException).code !== 'ENOENT') {
+        console.error('Error reading posts.json:', (err as Error).message);
         throw err;
       }
     }
@@ -45,25 +46,11 @@ export async function savePost(data: Record<string, any>): Promise<any> {
 
     return { success: true, id: newEntry.id };
   } catch (error) {
-    console.error('Error saving post to file:', error);
+    if (error instanceof Error) {
+      console.error('Error saving post to file:', error.message);
+    } else {
+      console.error('Error saving post to file:', error);
+    }
     throw error;
   }
 }
-
-const initialData = [
-  {
-    "id": 1,
-    "key": "value",
-    "message": "Hello, JSON!",
-    "createdAt": "2025-03-21T12:00:00.000Z"
-  }
-];
-
-fsPromises.writeFile(saveFilePath, JSON.stringify(initialData, null, 2), 'utf-8')
-  .then(() => console.log('Initial data written to file'))
-  .catch((error: NodeJS.ErrnoException) => {
-    console.error('Error writing initial data to file:', error.message);
-    if (error.code) {
-      console.error('Error code:', error.code);
-    }
-  });
