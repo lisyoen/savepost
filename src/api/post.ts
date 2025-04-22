@@ -44,6 +44,8 @@ export async function savePost(data: Record<string, any>): Promise<any> {
 
     await fsPromises.writeFile(saveFilePath, JSON.stringify(existingData, null, 2), 'utf-8');
 
+    console.log('Saved at:', new Date().toLocaleTimeString()); // 시간만 출력
+
     return { success: true, id: newEntry.id };
   } catch (error) {
     if (error instanceof Error) {

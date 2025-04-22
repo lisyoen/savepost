@@ -5,6 +5,8 @@ const app = express();
 const PORT = 4040;
 
 app.use(express.json());
+// 시작 시간 로그 출력
+
 
 // 기본 라우트 설정
 app.post('/savepost', async (req, res) => {
