@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --outdir=dist --platform=node --sourcemap",
+    "build": "esbuild app/src/app.jsx --bundle --platform=node --sourcemap --outfile=dist/index.js",
+    "watch": "esbuild app/src/app.jsx --bundle --platform=node --sourcemap --outfile=dist/index.js --watch --external:node_modules",
     "clean": "rimraf dist",
     "rebuild": "npm run clean && npm run build",
-    "start": "npm run build && node dist/index.js"
+    "start": "npm run build && node --inspect dist/index.js"
   },
   "dependencies": {
     "axios": "^1.0.0",
@@ -17,6 +18,7 @@
   "devDependencies": {
     "@types/express": "^5.0.1",
     "@types/node": "^22.13.10",
+    "esbuild": "^0.25.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   },
