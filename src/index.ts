@@ -1,12 +1,15 @@
 import express from 'express';
 import { savePost } from './api/post.js'; // .js 확장자 추가
+// import { createRequire } from 'module'; // createRequire 추가
 
+// const require = createRequire(import.meta.url); // CommonJS require 생성
 const app = express();
 const PORT = 4040;
 
 app.use(express.json());
 // 시작 시간 로그 출력
-
+console.log(`Server started at ${new Date().toLocaleTimeString()}`); // 시간만 출력
+// 서버가 시작될 때 로그 출력
 
 // 기본 라우트 설정
 app.post('/savepost', async (req, res) => {
@@ -30,3 +33,4 @@ app.post('/savepost', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+

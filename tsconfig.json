@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2020",
     "module": "ESNext",
     "outDir": "./dist", // 빌드된 파일이 dist 디렉토리에 저장됨
     "rootDir": "./src", // src 디렉토리를 기준으로 빌드
@@ -10,6 +10,6 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*"], // src 디렉토리 내 모든 파일 포함
+  "include": ["src"], // src 디렉토리 내 모든 파일 포함
   "exclude": ["node_modules"] // node_modules 제외
 }

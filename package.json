@@ -2,7 +2,6 @@
   "name": "savepost",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "type": "module",
   "scripts": {
     "build": "esbuild src/index.ts --bundle --outdir=dist --platform=node --sourcemap",
     "clean": "rimraf dist",
@@ -12,7 +11,8 @@
   "dependencies": {
     "axios": "^1.0.0",
     "express": "^4.18.2",
-    "mysql2": "^3.14.0"
+    "mysql2": "^3.14.0",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "@types/express": "^5.0.1",
