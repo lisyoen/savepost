@@ -15,9 +15,38 @@ console.log(`Starting server at ${new Date().toLocaleTimeString()}`); // 시간�
 
 export async function savePost(data: Record<string, any>): Promise<any> {
   try {
-    const newEntry = { id: Date.now(), ...data, createdAt: new Date().toISOString() };
+    const { filepath, offset, data: base64Data } = data;
 
-    // JSON 로그를 한 줄씩 추가
+    if (!filepath || typeof offset !== 'number' || !base64Data) {
+      throw new Error('Invalid input: filepath, offset, and data are required.');
+    }
+
+    const fullFilePath = path.join(dataDir, filepath);
+
+    // Ensure the directory for the file exists
+    const fileDir = path.dirname(fullFilePath);
+    if (!fs.existsSync(fileDir)) {
+      fs.mkdirSync(fileDir, { recursive: true });
+    }
+
+    // Decode Base64 data
+    const binaryData = Buffer.from(base64Data, 'base64');
+
+    // Write binary data to the file at the specified offset
+    const fileHandle = await fsPromises.open(fullFilePath, 'a+');
+    try {
+      await fileHandle.write(binaryData, 0, binaryData.length, offset);
+    } finally {
+      await fileHandle.close();
+    }
+
+    // Log the operation in the JSONL file
+    const newEntry = {
+      id: Date.now(),
+      filepath,
+      offset,
+      createdAt: new Date().toISOString(),
+    };
     await fsPromises.appendFile(dataFile, JSON.stringify(newEntry) + '\n', 'utf-8');
 
     console.log('Saved at:', new Date().toLocaleTimeString()); // 시간만 출력

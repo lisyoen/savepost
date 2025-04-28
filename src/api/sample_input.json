@@ -1,0 +1,5 @@
+{
+    "filepath": "/testfile.dat",
+    "offset": 0,
+    "data": "base64(binary)"
+}
