@@ -12,7 +12,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}\\dist\\index.js",
-            "preLaunchTask": "npm",
+            "preLaunchTask": "esbuild:dev",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]

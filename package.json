@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "build": "esbuild app/src/app.jsx --bundle --platform=node --sourcemap --outfile=dist/index.js",
-    "watch": "esbuild app/src/app.jsx --bundle --platform=node --sourcemap --outfile=dist/index.js --watch --external:node_modules",
+    "build": "esbuild src/index.ts --bundle --platform=node --sourcemap --outfile=dist/index.js",
+    "watch": "esbuild src/index.ts --bundle --platform=node --sourcemap --outfile=dist/index.js --watch --external:node_modules",
     "clean": "rimraf dist",
     "rebuild": "npm run clean && npm run build",
     "start": "npm run build && node --inspect dist/index.js"
