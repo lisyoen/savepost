@@ -4,9 +4,10 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "npm run build && ts-node --esm dist/api/post.js"
+    "build": "esbuild src/index.ts --bundle --outdir=dist --platform=node --sourcemap",
+    "clean": "rimraf dist",
+    "rebuild": "npm run clean && npm run build",
+    "start": "npm run build && node dist/index.js"
   },
   "dependencies": {
     "axios": "^1.0.0",
@@ -18,5 +19,16 @@
     "@types/node": "^22.13.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
-  }
+  },
+  "description": "SavePost는 로그 데이터를 저장하는 POST API를 제공하는 프로젝트입니다.   이 프로젝트는 간단한 RESTful API를 통해 데이터를 저장하고 관리할 수 있도록 설계되었습니다.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lisyoen/savepost.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lisyoen/savepost/issues"
+  },
+  "homepage": "https://github.com/lisyoen/savepost#readme"
 }
